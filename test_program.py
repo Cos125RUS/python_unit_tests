@@ -1,8 +1,14 @@
+"""
+Модуль для сравнения средних арифметических значений двух списков чисел
+"""
 from pytest import mark, raises
 from program import Program
 
 
 class TestProgram:
+    """
+    Класс содержит методы сравнения средних арифметических значений двух списков чисел
+    """
     @mark.parametrize("list1, list2, avg1, avg2", [([1, 2, 3], [2, 4, 6], 2, 4),
                                                    ([3, 3, 3], [12, 1, 2], 3, 5),
                                                    ([2.2, 3.5, 3.3], [1.4, 2.6, 2.3],
@@ -58,22 +64,26 @@ class TestProgram:
         with raises(TypeError):
             Program.comparison("123", 15)
 
-    @mark.parametrize("list1, list2, compare", [([2, 4], [1, 1], "Первый список имеет большее среднее значение"),
-                                              ([1, 3], [6, 5], "Второй список имеет большее среднее значение"),
-                                              ([6, 6], [5, 7], "Средние значения равны")])
-    def test_program_success(self, list1, list2, compare):
+    @mark.parametrize("list1, list2", [([2, 4], [1, 1]), ([1, 3], [6, 5]), ([6, 6], [5, 7])])
+    def test_program_success(self, list1, list2):
         """
-        Интеграционный тест класса Program
+        Интеграционный тест успешной работы сравнения списков класса Program
         :param list1: [num]
         :param list2: [num]
-        :param compare: Тезультирующий текст
         """
         Program.compare(list1, list2)
 
     def test_program_with_error(self):
+        """
+        Интеграционный тест сравнения списков класса Program с ошибкой неверного типа данных
+        """
         with raises(TypeError):
             Program.compare(["dsd", "qwe"], [12, 23])
 
     def test_program_clear_list(self):
+        """
+        Интеграционный тест сравнения списков класса Program с ошибкой при отправки пустого списка
+        :return:
+        """
         with raises(ValueError):
             Program.compare([], [12, 23])
