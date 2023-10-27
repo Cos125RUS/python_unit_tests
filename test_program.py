@@ -8,6 +8,13 @@ class TestProgram:
                                                    ([2.2, 3.5, 3.3], [1.4, 2.6, 2.3],
                                                     3.0, 2.1)])
     def test_avg_lists_equality(self, list1, list2, avg1, avg2):
+        """
+        Тест подсчёта средних арифметических значений двух списков
+        :param list1: [nums]
+        :param list2: [nums]
+        :param avg1: avg(list1)
+        :param avg2: avg(list2)
+        """
         res1, res2 = Program.avgs(list1, list2)
         assert res1 == avg1
         assert res2 == avg2
@@ -15,10 +22,19 @@ class TestProgram:
     @mark.parametrize("list1, list2, error", [([1, 2, 3], ["d", "q"], TypeError),
                                               (["d", "q"], [12, 1, 2], TypeError)])
     def test_avg_lists_with_error(self, list1, list2, error):
+        """
+        Тест на отлов невалидных значений
+        :param list1: [nums]
+        :param list2: [nums]
+        :param error: ErrorType
+        """
         with raises(error):
             Program.avgs(list1, list2)
 
     def test_avr_lists_clear_list(self):
+        """
+        Тест на отлов пустого списка
+        """
         with raises(ValueError):
             Program.avgs([], [1, 2])
 
@@ -26,9 +42,38 @@ class TestProgram:
                                               (1, 3, "Второй список имеет большее среднее значение"),
                                               (6, 6, "Средние значения равны")])
     def test_compare_avg_valid(self, arg1, arg2, compare):
+        """
+        Тест на сравнение средних значений
+        :param arg1: num
+        :param arg2: num
+        :param compare: Тезультирующий текст
+        """
         res = Program.comparison(arg1, arg2)
         assert res == compare
 
     def test_compare_avg_not_valid(self):
+        """
+        Тест на отлов невалидных значений
+        """
         with raises(TypeError):
             Program.comparison("123", 15)
+
+    @mark.parametrize("list1, list2, compare", [([2, 4], [1, 1], "Первый список имеет большее среднее значение"),
+                                              ([1, 3], [6, 5], "Второй список имеет большее среднее значение"),
+                                              ([6, 6], [5, 7], "Средние значения равны")])
+    def test_program_success(self, list1, list2, compare):
+        """
+        Интеграционный тест класса Program
+        :param list1: [num]
+        :param list2: [num]
+        :param compare: Тезультирующий текст
+        """
+        Program.compare(list1, list2)
+
+    def test_program_with_error(self):
+        with raises(TypeError):
+            Program.compare(["dsd", "qwe"], [12, 23])
+
+    def test_program_clear_list(self):
+        with raises(ValueError):
+            Program.compare([], [12, 23])
