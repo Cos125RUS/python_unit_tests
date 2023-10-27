@@ -25,6 +25,10 @@ class TestProgram:
     @mark.parametrize("arg1, arg2, compare", [(4, 2, "Первый список имеет большее среднее значение"),
                                               (1, 3, "Второй список имеет большее среднее значение"),
                                               (6, 6, "Средние значения равны")])
-    def test_avg_lists(self, arg1, arg2, compare):
+    def test_compare_avg_valid(self, arg1, arg2, compare):
         res = Program.comparison(arg1, arg2)
         assert res == compare
+
+    def test_compare_avg_not_valid(self):
+        with raises(TypeError):
+            Program.comparison("123", 15)
